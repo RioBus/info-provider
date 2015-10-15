@@ -1,0 +1,49 @@
+{
+  "name": "info-provider",
+  "version": "3.3.0",
+  "description": "RioBus info-provider application",
+  "main": "index.js",
+  "scripts": {
+    "test": "gulp buildTest && mocha .compiled/test/**/* --timeout 10000",
+    "build": "gulp build",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "compiler": "common",
+  "keywords": [
+    "typescript",
+    "nodejs",
+    "node",
+    "desktop",
+    "server",
+    "wrapper",
+    "infrastructure"
+  ],
+  "author": "",
+  "license": "",
+  "bugs": {
+    "url": ""
+  },
+  "homepage": "",
+  "dependencies": {
+    "compression": "^1.4.4",
+    "deasync": "^0.1.0",
+    "emailjs": "^0.3.16",
+    "express": "^4.12.4",
+    "fs-extra": "^0.18.4",
+    "moment": "^2.10.3",
+    "moment-timezone": "^0.4.0",
+    "mongodb": "^2.0.36",
+    "request": "^2.57.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-load-plugins": "^0.10.0",
+    "gulp-shell": "^0.4.2",
+    "gulp-typescript": "^2.7.6",
+    "mocha": "^2.2.5"
+  }
+}
