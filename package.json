@@ -1,7 +1,7 @@
 {
   "name": "info-provider",
-  "version": "3.3.0",
-  "description": "RioBus info-provider application",
+  "version": "1.0.0",
+  "description": "Gets informations about bus from a file",
   "main": "index.js",
   "scripts": {
     "test": "gulp buildTest && mocha .compiled/test/**/* --timeout 10000",
@@ -14,16 +14,14 @@
   },
   "compiler": "common",
   "keywords": [
-    "typescript",
+    "information",
+    "bus",
     "nodejs",
     "node",
-    "desktop",
-    "server",
-    "wrapper",
-    "infrastructure"
+    "file"
   ],
-  "author": "",
-  "license": "",
+  "author": "Leticia Freire",
+  "license": "ISC",
   "bugs": {
     "url": ""
   },
