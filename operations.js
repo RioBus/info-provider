@@ -3,7 +3,7 @@ var InfoBus     = require("./infoBus");
 var MongoClient = require('mongodb').MongoClient;
 var dbConfig    = require("./config").dataBaseConfig;
 var fs          = require('fs');
-
+var __dirname;
 
 
 /**
@@ -34,8 +34,15 @@ function startDataBase(callback){
  * @param {function} callback
  */
 function saveToDataBase(info, collection, callback) {
-	collection.insert(info, callback);
+	 var batch = collection.initializeUnorderedBulkOp();
+	 batch.insert({info:1});
+	  batch.execute(function(err, result) {
+	  	console.log(result);
+	  })
+	//collection.insert(info, callback);
 }
+
+
 
 /**
  * Breaks the data in informations about bus 
@@ -69,10 +76,39 @@ function prepareData(data, callback){
  * @param {function} callback
  */
 function getInfo(callback){
-	fs.readFile('cadbus_cadastro_veiculos.csv', 'utf-8', function(err, data){
-		var lines = data.split("\n");
-		callback(lines);
+	getFiles(function(files){
+		for(var i = 0; i < files.length; i++){
+			//console.log(files[i]);
+			fs.readFile(files[i], 'utf-8', function(err, data){//'cadbus_cadastro_veiculos_brt.csv', 'utf-8', function(err, data){
+				//console.log(data);
+				var lines = data.split("\n");
+				callback(lines, files.length);
+			})
+		}
 	})
+}
+
+function getFiles(callback){
+	
+	fs.readdir(__dirname, function(err, file){
+		if(err) console.log(err);
+		else{
+			var files = [];
+			var j = 0;
+			for(var i = 0; i < file.length; i++){
+				if(file[i].indexOf('.csv')>-1){
+					//console.log("Esse tem a extensão que eu quero: " + file[i]);
+					files[j] = file[i]
+					j++;
+				}
+			}
+			callback(files);
+		}
+		
+	})
+	
+	
+  
 }
 
 module.exports = {
@@ -80,4 +116,5 @@ module.exports = {
 	saveToDataBase:saveToDataBase,
 	prepareData:prepareData,
 	getInfo:getInfo,
+	getFiles:getFiles,
 };
