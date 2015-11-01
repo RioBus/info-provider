@@ -34,12 +34,12 @@ function startDataBase(callback){
  * @param {function} callback
  */
 function saveToDataBase(info, collection, callback) {
-	 var batch = collection.initializeUnorderedBulkOp();
-	 batch.insert({info:1});
-	  batch.execute(function(err, result) {
-	  	console.log(result);
-	  })
-	//collection.insert(info, callback);
+	 //var batch = collection.initializeUnorderedBulkOp();
+	 //batch.insert({info:1});
+	 // batch.execute(function(err, result) {
+	  	//console.log(result);
+	  //})
+	collection.insert(info, callback);
 }
 
 
