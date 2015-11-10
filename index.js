@@ -6,34 +6,29 @@ var startDataBase  = require("./operations").startDataBase;
 var getFiles       = require("./operations").getFiles;
 var line, numberLines;
 var countFiles = 0;
+var countSuccess = 0;
 
 
 startDataBase(function(err, collection){
     if(err) console.log(err);
     else{
-    
-       
-       getInfo(function(lines, numberFiles){
-        
-        
-        
+       getInfo(function(lines, index, numberFiles){
         
             numberLines = lines.length;
             console.log("Numero de linhas: " + numberLines);
             
+            var busInfos = [];
             for(line = 0 ; line < numberLines; line++){
-                prepareData(lines[line], function(response){   
-                   // console.log(response);
-                    saveToDataBase(response, collection, function(err){
-                        if(err) console.log(err);
-                        else{
-                           // console.log("["+ response.sign + "] Saved")
-                        }
-                    });
-                });
-            }  
-            if(line === numberLines){console.log(line ); countFiles++; console.log(countFiles);}
-            if(countFiles === numberFiles) process.exit(); 
+                var response = prepareData(lines[line]);
+                busInfos.push(response);   
+            }
+            saveToDataBase(busInfos, collection, function(err, response) {
+                if(err) console.log(err);
+                else{
+                    console.log(++countSuccess+" [SUCCESS] "+response.ops[0].sign);
+				    //if(index===numberFiles-1) process.exit();
+                }
+            });
         })
     }    
 

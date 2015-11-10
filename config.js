@@ -3,7 +3,7 @@ module.exports = {
 		user:"",
 		pass:"",
 		dataBaseName:"riobus",
-		host:"mongo",
+		host:"localhost",
 		port:"27017"
 	}
 };

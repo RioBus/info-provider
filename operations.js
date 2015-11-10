@@ -20,7 +20,6 @@ function startDataBase(callback){
 	//	console.log('mongodb://' + dbConfig.host + ':' + dbConfig.port + '/' + dbConfig.dataBaseName);
 		
 		var collection = db.collection("info-bus");
-		console.log(collection);
 		collection.remove({}, function(){});
 		callback(null, collection);
 	});
@@ -34,14 +33,28 @@ function startDataBase(callback){
  * @param {function} callback
  */
 function saveToDataBase(info, collection, callback) {
-	 //var batch = collection.initializeUnorderedBulkOp();
-	 //batch.insert({info:1});
-	 // batch.execute(function(err, result) {
-	  	//console.log(result);
-	  //})
-	collection.insert(info, callback);
+	//var batch = collection.initializeUnorderedBulkOp();
+	for(var busInfo of info) {
+		//batch.insert(busInfo);
+		collection.insert(busInfo, callback);
+		
+	}
+	//saveNext(info, collection, 0, callback, 0);
+	//collection.insert(info, callback);
+	// batch.execute(function(err, result) {
+	// 	if(err) console.log("ERROR", err);
+	// 	else console.log("GOTCHA", result.nInserted, result.isOk());
+	// })
 }
 
+function saveNext(list, collection, index, callback, timeout) {
+	setTimeout(function(){
+		if(index<list.length) collection.insert(list[index++], function(error, response){
+			callback(error, response);
+			saveNext(list, collection, index, callback, timeout);
+		});
+	}, timeout);
+}
 
 
 /**
@@ -64,8 +77,8 @@ function prepareData(data, callback){
 	var order = columns[8];
 	var typeBus = columns[9];
 	var date = columns[10];
-	callback(new InfoBus(sign, fabrication, fuel, plant, model, body, frame, numberFrame, order, typeBus, date));
-	//return new InfoBus(sign, fabrication, fuel, plant, model, body, frame, numberFrame, order, typeBus, date);
+	//callback(new InfoBus(sign, fabrication, fuel, plant, model, body, frame, numberFrame, order, typeBus, date));
+	return new InfoBus(sign, fabrication, fuel, plant, model, body, frame, numberFrame, order, typeBus, date);
 }
 
 
@@ -82,7 +95,7 @@ function getInfo(callback){
 			fs.readFile(files[i], 'utf-8', function(err, data){//'cadbus_cadastro_veiculos_brt.csv', 'utf-8', function(err, data){
 				//console.log(data);
 				var lines = data.split("\n");
-				callback(lines, files.length);
+				callback(lines, i, files.length);
 			})
 		}
 	})
