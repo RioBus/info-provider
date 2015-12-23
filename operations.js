@@ -57,6 +57,8 @@ function saveNext(list, collection, index, callback, timeout) {
 }
 
 
+
+
 /**
  * Breaks the data in informations about bus 
  * @param {string} data
@@ -73,12 +75,12 @@ function prepareData(data, callback){
 	var model = columns[4];
 	var body = columns[5];
 	var frame = columns[6];
-	var numberFrame = columns[7];
+	var frameNumber = columns[7];
 	var order = columns[8];
-	var typeBus = columns[9];
-	var date = columns[10];
+	var features = columns[9];
+	var inclusionDate = columns[10];
 	//callback(new InfoBus(sign, fabrication, fuel, plant, model, body, frame, numberFrame, order, typeBus, date));
-	return new InfoBus(sign, fabrication, fuel, plant, model, body, frame, numberFrame, order, typeBus, date);
+	return new InfoBus(sign, fabrication, fuel, plant, model, body, frame, frameNumber, order, features, inclusionDate);
 }
 
 
