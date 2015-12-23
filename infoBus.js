@@ -7,24 +7,27 @@
  * @param {string} model
  * @param {string} body
  * @param {string} frame
- * @param {string} numberFrame
+ * @param {string} frameNumber
  * @param {string} order
- * @param {string} typeBus
- * @param {string} date
+ * @param {string} features
+ * @param {string} inclusionDate
  */
 
-var InfoBus = function(sign, fabrication, fuel, plant, model, body, frame, numberFrame, order, typeBus, date){
+var InfoBus = function(sign, fabrication, fuel, plant, model, body, frame, frameNumber, order, features, inclusionDate){
 	this.sign = sign;
-	this.fabrication = fabrication;
+	this.fabrication = parseInt(fabrication);
 	this.fuel = fuel;
-	this.plant = plant;
+	this.plant = parseInt(plant);
 	this.model = model;
 	this.body = body;
 	this.frame = frame;
-	this.numberFrame = numberFrame;
+	this.frameNumber = frameNumber;
 	this.order = order;
-	this.typeBus = typeBus;
-	this.date = date;
+	this.features = features;
+	this.inclusionDate = new Date(inclusionDate);
 }
 
 module.exports = InfoBus;
+
+
+
