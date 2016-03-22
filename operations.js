@@ -19,7 +19,7 @@ function startDataBase(callback){
 		if(err) callback(err, null);
 	//	console.log('mongodb://' + dbConfig.host + ':' + dbConfig.port + '/' + dbConfig.dataBaseName);
 		
-		var collection = db.collection("info-bus");
+		var collection = db.collection('bus_info');
 		collection.remove({}, function(){});
 		callback(null, collection);
 	});
