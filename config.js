@@ -2,7 +2,7 @@ module.exports = {
 	dataBaseConfig:{
 		user:"",
 		pass:"",
-		dataBaseName:"riobus",
+		dataBaseName:"nodejs",
 		host:"localhost",
 		port:"27017"
 	}

@@ -5,7 +5,6 @@ var dbConfig    = require("./config").dataBaseConfig;
 var fs          = require('fs');
 var __dirname;
 
-
 /**
  * Open the connection with database and clear the collection
  * @param {function} callback
@@ -17,14 +16,12 @@ function startDataBase(callback){
 	else address = 'mongodb://' + dbConfig.user + ':' + dbConfig.pass + '@' + dbConfig.host + ':' + dbConfig.port + '/' + dbConfig.dataBaseName;
 	MongoClient.connect(address, function(err, db) {
 		if(err) callback(err, null);
-	//	console.log('mongodb://' + dbConfig.host + ':' + dbConfig.port + '/' + dbConfig.dataBaseName);
 		
 		var collection = db.collection('bus_info');
 		collection.remove({}, function(){});
 		callback(null, collection);
 	});
 }
-
 
 /**
  * Insert the informations on database
@@ -33,18 +30,9 @@ function startDataBase(callback){
  * @param {function} callback
  */
 function saveToDataBase(info, collection, callback) {
-	//var batch = collection.initializeUnorderedBulkOp();
 	for(var busInfo of info) {
-		//batch.insert(busInfo);
 		collection.insert(busInfo, callback);
-		
 	}
-	//saveNext(info, collection, 0, callback, 0);
-	//collection.insert(info, callback);
-	// batch.execute(function(err, result) {
-	// 	if(err) console.log("ERROR", err);
-	// 	else console.log("GOTCHA", result.nInserted, result.isOk());
-	// })
 }
 
 function saveNext(list, collection, index, callback, timeout) {
@@ -55,9 +43,6 @@ function saveNext(list, collection, index, callback, timeout) {
 		});
 	}, timeout);
 }
-
-
-
 
 /**
  * Breaks the data in informations about bus 
@@ -79,12 +64,8 @@ function prepareData(data, callback){
 	var order = columns[8];
 	var features = columns[9];
 	var inclusionDate = columns[10];
-	//callback(new InfoBus(sign, fabrication, fuel, plant, model, body, frame, numberFrame, order, typeBus, date));
 	return new InfoBus(sign, fabrication, fuel, plant, model, body, frame, frameNumber, order, features, inclusionDate);
 }
-
-
-
 
 /**
  * Takes every bus line that will be used
@@ -93,18 +74,15 @@ function prepareData(data, callback){
 function getInfo(callback){
 	getFiles(function(files){
 		for(var i = 0; i < files.length; i++){
-			//console.log(files[i]);
-			fs.readFile(files[i], 'utf-8', function(err, data){//'cadbus_cadastro_veiculos_brt.csv', 'utf-8', function(err, data){
-				//console.log(data);
+			fs.readFile(files[i], 'utf-8', function(err, data){
 				var lines = data.split("\n");
 				callback(lines, i, files.length);
 			})
 		}
-	})
+	});
 }
 
 function getFiles(callback){
-	
 	fs.readdir(__dirname, function(err, file){
 		if(err) console.log(err);
 		else{
@@ -112,18 +90,13 @@ function getFiles(callback){
 			var j = 0;
 			for(var i = 0; i < file.length; i++){
 				if(file[i].indexOf('.csv')>-1){
-					//console.log("Esse tem a extensão que eu quero: " + file[i]);
 					files[j] = file[i]
 					j++;
 				}
 			}
 			callback(files);
 		}
-		
-	})
-	
-	
-  
+	});
 }
 
 module.exports = {
