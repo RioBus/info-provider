@@ -67,6 +67,8 @@ function prepareData(data){
 	bus.features = columns[9].trim();
 	bus.inclusionDate = moment(columns[10], 'DD/MM/YY HH:mm').toDate(); // format: 23/05/14 18:
     
+    bus.detectAirConditioning();
+    
     return bus;
 }
 

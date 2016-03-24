@@ -27,6 +27,22 @@ var InfoBus = function(sign, fabrication, fuel, plant, model, body, frame, frame
 	this.inclusionDate = new Date(inclusionDate);
 }
 
+InfoBus.prototype.detectAirConditioning = function() {
+    if (!this.features) return;
+    
+    var matchesPositive = this.features.match(/C\/AR/i);
+    if (matchesPositive) {
+        this.hasAirConditioning = true;
+        return;
+    }
+    
+    var matchesNegative = this.features.match(/S\/AR/i);
+    if (matchesNegative) {
+        this.hasAirConditioning = false;
+        return;
+    }
+}
+
 module.exports = InfoBus;
 
 
