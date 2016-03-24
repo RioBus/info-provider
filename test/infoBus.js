@@ -21,11 +21,32 @@ describe('InfoBus', () => {
         Assert.deepStrictEqual(bus.hasAirConditioning, false);
 	});
     
-	it('should not detect if a bus air conditioning when info not present', function() {
+	it('should not detect if a bus has air conditioning when info not present', function() {
 		var bus = new InfoBus();
         bus.features = '45 BRT ARTICULADO';
         bus.detectAirConditioning();
         Assert.deepStrictEqual(bus.hasAirConditioning, undefined);
+	});
+	
+	it('should detect that a bus has wheelchair lift', function() {
+		var bus = new InfoBus();
+        bus.features = '53 MIDI URB C/AR C/ELEV 2 CATR';
+        bus.detectWheelchairLift();
+        Assert.deepStrictEqual(bus.hasWheelchairLift, true);
+	});
+    
+	it('should detect that a bus does not have wheelchair lift', function() {
+		var bus = new InfoBus();
+        bus.features = '30 ONBUS BASIC URB S/AR S/ELEV';
+        bus.detectWheelchairLift();
+        Assert.deepStrictEqual(bus.hasWheelchairLift, false);
+	});
+    
+	it('should not detect if a bus has wheelchair lift when info not present', function() {
+		var bus = new InfoBus();
+        bus.features = '45 BRT ARTICULADO';
+        bus.detectWheelchairLift();
+        Assert.deepStrictEqual(bus.hasWheelchairLift, undefined);
 	});
 	
 });

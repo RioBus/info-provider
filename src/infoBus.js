@@ -27,19 +27,34 @@ var InfoBus = function(sign, fabrication, fuel, plant, model, body, frame, frame
 	this.inclusionDate = new Date(inclusionDate);
 }
 
+InfoBus.prototype.detectFeatures = function() {
+    this.detectAirConditioning();
+    this.detectWheelchairLift();
+}
+
 InfoBus.prototype.detectAirConditioning = function() {
     if (!this.features) return;
     
     var matchesPositive = this.features.match(/C\/AR/i);
     if (matchesPositive) {
         this.hasAirConditioning = true;
-        return;
+    } else {
+        var matchesNegative = this.features.match(/S\/AR/i);
+        if (matchesNegative) {
+            this.hasAirConditioning = false;
+        }
     }
-    
-    var matchesNegative = this.features.match(/S\/AR/i);
-    if (matchesNegative) {
-        this.hasAirConditioning = false;
-        return;
+}
+
+InfoBus.prototype.detectWheelchairLift = function() {    
+    var matchesPositive = this.features.match(/C\/ELEV/i);
+    if (matchesPositive) {
+        this.hasWheelchairLift = true;
+    } else {
+        var matchesNegative = this.features.match(/S\/ELEV/i);
+        if (matchesNegative) {
+            this.hasWheelchairLift = false;
+        }
     }
 }
 

@@ -22,6 +22,7 @@ describe('Operations', () => {
         Assert.deepStrictEqual(bus.features, "53 MIDI URB C/AR C/ELEV 2 CATR");
         Assert.deepStrictEqual(bus.inclusionDate, new Date(2014, 4, 23, 18, 37));
         Assert.deepStrictEqual(bus.hasAirConditioning, true);
+        Assert.deepStrictEqual(bus.hasWheelchairLift, true);
 	});
 	
 });
