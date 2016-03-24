@@ -1,8 +1,10 @@
+'use strict';
 var request     = require('request');
 var InfoBus     = require("./infoBus");
 var MongoClient = require('mongodb').MongoClient;
 var dbConfig    = require("./config").dataBaseConfig;
 var fs          = require('fs');
+var moment      = require('moment');
 var __dirname;
 
 /**
@@ -47,24 +49,25 @@ function saveNext(list, collection, index, callback, timeout) {
 /**
  * Breaks the data in informations about bus 
  * @param {string} data
- * @param {function} callback
  * @return {InfoBus}
  */
-function prepareData(data, callback){
-	var columns = data.split(",");
-	//placa, fabricação, combustível, planta, modelo, carroceria, chassi, numero do chassi, ordem, tipo do veículo, data 
-	var sign = columns[0];
-	var fabrication = columns[1];
-	var fuel = columns[2];
-	var plant = columns[3];
-	var model = columns[4];
-	var body = columns[5];
-	var frame = columns[6];
-	var frameNumber = columns[7];
-	var order = columns[8];
-	var features = columns[9];
-	var inclusionDate = columns[10];
-	return new InfoBus(sign, fabrication, fuel, plant, model, body, frame, frameNumber, order, features, inclusionDate);
+function prepareData(data){
+	var columns = data.split(","); // placa, fabricação, combustível, planta, modelo, carroceria, chassi, numero do chassi, ordem, tipo do veículo, data
+    
+    var bus = new InfoBus();
+	bus.sign = columns[0].trim();
+	bus.fabrication = parseInt(columns[1]);
+	bus.fuel = columns[2].trim();
+	bus.plant = parseInt(columns[3]);
+	bus.model = columns[4].trim();
+	bus.body = columns[5].trim();
+	bus.frame = columns[6].trim();
+	bus.frameNumber = columns[7].trim();
+	bus.order = columns[8].trim();
+	bus.features = columns[9].trim();
+	bus.inclusionDate = moment(columns[10], 'DD/MM/YY HH:mm').toDate(); // format: 23/05/14 18:
+    
+    return bus;
 }
 
 /**
@@ -83,13 +86,14 @@ function getInfo(callback){
 }
 
 function getFiles(callback){
-	fs.readdir(__dirname, function(err, file){
+    console.log(__dirname);
+	fs.readdir(__dirname + '/../', function(err, file){
 		if(err) console.log(err);
 		else{
 			var files = [];
 			var j = 0;
 			for(var i = 0; i < file.length; i++){
-				if(file[i].indexOf('.csv')>-1){
+				if(file[i].indexOf('.csv') > -1){
 					files[j] = file[i]
 					j++;
 				}

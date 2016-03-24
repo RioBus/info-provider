@@ -16,9 +16,11 @@ startDataBase(function(err, collection){
             console.log("Numero de linhas: " + numberLines);
             
             var busInfos = [];
-            for(line = 0 ; line < numberLines; line++){
+            var initialLine = 1;
+            for(line = initialLine; line < numberLines; line++){
+                if (lines[line].length == 0) continue;
                 var response = prepareData(lines[line]);
-                busInfos.push(response);   
+                busInfos.push(response);
             }
             
             saveToDataBase(busInfos, collection, function(err, response) {
