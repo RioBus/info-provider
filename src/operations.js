@@ -55,14 +55,14 @@ function prepareData(data){
 	var columns = data.split(","); // placa, fabricação, combustível, planta, modelo, carroceria, chassi, numero do chassi, ordem, tipo do veículo, data
     
     var bus = new InfoBus();
-	bus.sign = columns[0].trim();
+	bus.plate = columns[0].trim();
 	bus.fabrication = parseInt(columns[1]);
 	bus.fuel = columns[2].trim();
 	bus.plant = parseInt(columns[3]);
 	bus.model = columns[4].trim();
 	bus.body = columns[5].trim();
 	bus.frame = columns[6].trim();
-	bus.frameNumber = columns[7].trim();
+	bus.chassisNumber = columns[7].trim();
 	bus.order = columns[8].trim();
 	bus.features = columns[9].trim();
 	bus.inclusionDate = moment(columns[10], 'DD/MM/YY HH:mm').toDate(); // format: 23/05/14 18:
