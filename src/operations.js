@@ -1,5 +1,4 @@
 'use strict';
-var request     = require('request');
 var InfoBus     = require("./infoBus");
 var MongoClient = require('mongodb').MongoClient;
 var dbConfig    = require("./config").dataBaseConfig;

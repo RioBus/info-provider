@@ -26,7 +26,7 @@ startDataBase(function(err, collection){
             saveToDataBase(busInfos, collection, function(err, response) {
                 if(err) console.log(err);
                 else{
-                    console.log(++countSuccess+" [SUCCESS] "+response.ops[0].sign);
+                    console.log(++countSuccess + " [SUCCESS] Order: " + response.ops[0].order);
                 }
             });
         })
