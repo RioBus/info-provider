@@ -8,35 +8,27 @@ var line, numberLines;
 var countFiles = 0;
 var countSuccess = 0;
 
-
 startDataBase(function(err, collection){
     if(err) console.log(err);
     else{
        getInfo(function(lines, index, numberFiles){
-        
             numberLines = lines.length;
             console.log("Numero de linhas: " + numberLines);
             
             var busInfos = [];
-            for(line = 0 ; line < numberLines; line++){
+            var initialLine = 1;
+            for(line = initialLine; line < numberLines; line++){
+                if (lines[line].length == 0) continue;
                 var response = prepareData(lines[line]);
-                busInfos.push(response);   
+                busInfos.push(response);
             }
+            
             saveToDataBase(busInfos, collection, function(err, response) {
                 if(err) console.log(err);
                 else{
-                    console.log(++countSuccess+" [SUCCESS] "+response.ops[0].sign);
-				    //if(index===numberFiles-1) process.exit();
+                    console.log(++countSuccess + " [SUCCESS] Order: " + response.ops[0].order);
                 }
             });
         })
-    }    
-
-})
-
-
-/*getFiles(function(files){
-    for(var i = 0; i < files.length; i++)
-    console.log(files[i]);
-})*/
-
+    }
+});
